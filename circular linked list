@@ -1,0 +1,94 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node* next;
+};
+
+struct node* last = NULL;
+
+ Insert at beginning
+void insert() {
+    struct node* newnode;
+    int x;
+
+    newnode = (struct node*)malloc(sizeof(struct node));
+    printf("Enter data: ");
+    scanf("%d", &x);
+
+    newnode->data = x;
+
+    if (last == NULL) {
+        newnode->next = newnode;
+        last = newnode;
+    } else {
+        newnode->next = last->next;
+        last->next = newnode;
+    }
+
+    printf("Node inserted successfully.\n");
+}
+
+ Delete from beginning
+void deleteNode() {
+    struct node *temp, *first;
+
+    if (last == NULL) {
+        printf("List is empty.\n");
+        return;
+    }
+
+    first = last->next;
+
+    if (first == last) {
+        printf("Deleted element: %d\n", first->data);
+        free(first);
+        last = NULL;
+    } else {
+        last->next = first->next;
+        printf("Deleted element: %d\n", first->data);
+        free(first);
+    }
+}
+
+ Display
+void display() {
+    struct node* temp;
+
+    if (last == NULL) {
+        printf("List is empty.\n");
+        return;
+    }
+
+    temp = last->next;
+    printf("Circular linked list elements:\n");
+
+    do {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    } while (temp != last->next);
+
+    printf("(back to start)\n");
+}
+
+int main() {
+    int choice;
+
+    do {
+        printf("\n1.Insert 2.Delete 3.Display 4.Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1: insert(); break;
+            case 2: deleteNode(); break;
+            case 3: display(); break;
+            case 4: printf("Exiting...\n"); break;
+            default: printf("Invalid choice.\n");
+        }
+
+    } while (choice != 4);
+
+    return 0;
+}
