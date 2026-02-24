@@ -8,7 +8,6 @@ struct node {
 
 struct node* head = NULL;
 
-Insert
 void insert() {
     struct node* newnode;
     int x;
@@ -23,7 +22,7 @@ void insert() {
 
     printf("Node inserted successfully.\n");
 }
-Delete
+
 void deleteNode() {
     struct node* temp;
 
@@ -37,7 +36,7 @@ void deleteNode() {
     printf("Deleted element: %d\n", temp->data);
     free(temp);
 }
-Display
+
 void display() {
     struct node* temp = head;
 
