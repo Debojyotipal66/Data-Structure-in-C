@@ -23,11 +23,9 @@ int main() {
 
     for (int i = 0; postfix[i] != '\0'; i++) {
 
-        // If operand (digit)
         if (isdigit(postfix[i])) {
             push(postfix[i] - '0');
         }
-        // If operator
         else {
             op2 = pop();
             op1 = pop();
