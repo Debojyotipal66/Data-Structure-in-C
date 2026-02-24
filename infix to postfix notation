@@ -5,17 +5,14 @@
 char stack[MAX];
 int top = -1;
 
-// Push to stack
 void push(char x) {
     stack[++top] = x;
 }
 
-// Pop from stack
 char pop() {
     return stack[top--];
 }
 
-// Check precedence
 int precedence(char x) {
     if (x == '^') return 3;
     if (x == '*' || x == '/') return 2;
@@ -34,22 +31,18 @@ int main() {
     while (infix[i] != '\0') {
         ch = infix[i];
 
-        // If operand, add to postfix
         if (isalnum(ch)) {
             postfix[j++] = ch;
         }
-        // If '(' push
         else if (ch == '(') {
             push(ch);
         }
-        // If ')', pop until '('
         else if (ch == ')') {
             while (stack[top] != '(') {
                 postfix[j++] = pop();
             }
             pop(); // remove '('
         }
-        // If operator
         else {
             while (top != -1 && precedence(stack[top]) >= precedence(ch)) {
                 postfix[j++] = pop();
@@ -59,7 +52,6 @@ int main() {
         i++;
     }
 
-    // Pop remaining operators
     while (top != -1) {
         postfix[j++] = pop();
     }
