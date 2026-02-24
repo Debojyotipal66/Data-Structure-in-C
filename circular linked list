@@ -29,8 +29,7 @@ void insert() {
 
     printf("Node inserted successfully.\n");
 }
-
- Delete from beginning
+Delete from beginning
 void deleteNode() {
     struct node *temp, *first;
 
@@ -52,7 +51,6 @@ void deleteNode() {
     }
 }
 
- Display
 void display() {
     struct node* temp;
 
