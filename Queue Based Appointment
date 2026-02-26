@@ -1,0 +1,123 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Patient {
+    int id;
+    char name[50];
+    int age;
+    struct Patient* next;
+};
+
+struct Patient *front = NULL, *rear = NULL;
+
+void addPatient(int id, char name[], int age) {
+    struct Patient* newPatient = (struct Patient*)malloc(sizeof(struct Patient));
+
+    newPatient->id = id;
+    strcpy(newPatient->name, name);
+    newPatient->age = age;
+    newPatient->next = NULL;
+
+    if (rear == NULL) {
+        front = rear = newPatient;
+    } else {
+        rear->next = newPatient;
+        rear = newPatient;
+    }
+
+    printf("Patient added successfully!\n");
+}
+
+void servePatient() {
+    if (front == NULL) {
+        printf("No patients in queue.\n");
+        return;
+    }
+
+    struct Patient* temp = front;
+    printf("Serving Patient: ID=%d, Name=%s, Age=%d\n",
+           temp->id, temp->name, temp->age);
+
+    front = front->next;
+
+    if (front == NULL)
+        rear = NULL;
+
+    free(temp);
+}
+
+void viewNextPatient() {
+    if (front == NULL) {
+        printf("No patients waiting.\n");
+        return;
+    }
+
+    printf("Next Patient: ID=%d, Name=%s, Age=%d\n",
+           front->id, front->name, front->age);
+}
+
+void displayPatients() {
+    if (front == NULL) {
+        printf("No patients in queue.\n");
+        return;
+    }
+
+    struct Patient* temp = front;
+    printf("\nWaiting Patients List:\n");
+
+    while (temp != NULL) {
+        printf("ID=%d, Name=%s, Age=%d\n",
+               temp->id, temp->name, temp->age);
+        temp = temp->next;
+    }
+}
+
+int main() {
+    int choice, id, age;
+    char name[50];
+
+    while (1) {
+        printf("\n--- Clinic Appointment System ---\n");
+        printf("1. Add Patient\n");
+        printf("2. View Next Patient\n");
+        printf("3. Serve Patient\n");
+        printf("4. Display All Patients\n");
+        printf("5. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter Patient ID: ");
+                scanf("%d", &id);
+                printf("Enter Patient Name: ");
+                scanf("%s", name);
+                printf("Enter Age: ");
+                scanf("%d", &age);
+                addPatient(id, name, age);
+                break;
+
+            case 2:
+                viewNextPatient();
+                break;
+
+            case 3:
+                servePatient();
+                break;
+
+            case 4:
+                displayPatients();
+                break;
+
+            case 5:
+                printf("Exiting system...\n");
+                exit(0);
+
+            default:
+                printf("Invalid choice!\n");
+        }
+    }
+
+    return 0;
+}
