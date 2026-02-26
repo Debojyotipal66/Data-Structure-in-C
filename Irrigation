@@ -1,0 +1,84 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Crop {
+    char name[30];
+    int base_days;   
+    struct Crop* next;
+};
+
+struct Crop* createCrop(char name[], int days) {
+    struct Crop* newNode = (struct Crop*)malloc(sizeof(struct Crop));
+    strcpy(newNode->name, name);
+    newNode->base_days = days;
+    newNode->next = NULL;
+    return newNode;
+}
+
+void insertCrop(struct Crop** head, char name[], int days) {
+    struct Crop* newNode = createCrop(name, days);
+
+    if (*head == NULL) {
+        *head = newNode;
+        return;
+    }
+
+    struct Crop* temp = *head;
+    while (temp->next != NULL)
+        temp = temp->next;
+
+    temp->next = newNode;
+}
+
+struct Crop* searchCrop(struct Crop* head, char name[]) {
+    while (head != NULL) {
+        if (strcmp(head->name, name) == 0)
+            return head;
+        head = head->next;
+    }
+    return NULL;
+}
+
+int recommendIrrigation(int base_days, char soil[]) {
+
+    if (strcmp(soil, "Sandy") == 0)
+        return base_days - 2;    
+    else if (strcmp(soil, "Clay") == 0)
+        return base_days + 2;     
+    else
+        return base_days;         
+}
+
+int main() {
+
+    struct Crop* head = NULL;
+
+    insertCrop(&head, "Wheat", 7);
+    insertCrop(&head, "Rice", 4);
+    insertCrop(&head, "Maize", 5);
+    insertCrop(&head, "Cotton", 6);
+
+    char cropName[30], soilType[20];
+
+    printf("Available Crops: Wheat, Rice, Maize, Cotton\n");
+    printf("Enter Crop Name: ");
+    scanf("%s", cropName);
+
+    printf("Enter Soil Type (Sandy / Loamy / Clay): ");
+    scanf("%s", soilType);
+
+    struct Crop* found = searchCrop(head, cropName);
+
+    if (found != NULL) {
+        int days = recommendIrrigation(found->base_days, soilType);
+
+        if (days < 1) days = 1;  
+
+        printf("\nRecommended Irrigation Interval: Every %d days\n", days);
+    } else {
+        printf("\nCrop not found in system.\n");
+    }
+
+    return 0;
+}
