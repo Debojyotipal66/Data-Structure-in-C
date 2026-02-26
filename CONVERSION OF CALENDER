@@ -1,0 +1,31 @@
+#include <stdio.h>
+char *hindu_months[] = {
+    "Chaitra", "Vaishakha", "Jyeshtha", "Ashadha",
+    "Shravana", "Bhadrapada", "Ashwin",
+    "Kartika", "Margashirsha", "Pausha",
+    "Magha", "Phalguna"
+};
+
+int main() {
+    int day, month, year;
+    int hindu_year;
+    char *hindu_month;
+
+    printf("Enter Gregorian Date (DD MM YYYY): ");
+    scanf("%d %d %d", &day, &month, &year);
+
+    if (month < 3 || (month == 3 && day < 22))
+        hindu_year = year + 56;
+    else
+        hindu_year = year + 57;
+
+    hindu_month = hindu_months[(month + 9) % 12];
+
+    printf("\nApproximate Hindu Calendar Date:\n");
+    printf("Hindu Year (Vikram Samvat): %d\n", hindu_year);
+    printf("Hindu Month: %s\n", hindu_month);
+
+    printf("\nNote: Tithi and Paksha require moon phase calculation.\n");
+
+    return 0;
+}
