@@ -1,0 +1,111 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int day;
+    int steps;
+    int calories;
+    int sleep;
+    struct Node* next;
+};
+
+struct Node* head = NULL;
+
+void addData() {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+
+    printf("Enter day number: ");
+    scanf("%d", &newNode->day);
+
+    printf("Enter steps: ");
+    scanf("%d", &newNode->steps);
+
+    printf("Enter calories burned: ");
+    scanf("%d", &newNode->calories);
+
+    printf("Enter sleep hours: ");
+    scanf("%d", &newNode->sleep);
+
+    newNode->next = head;
+    head = newNode;
+}
+
+void displayData() {
+    struct Node* temp = head;
+
+    while(temp != NULL) {
+        printf("Day %d | Steps: %d | Calories: %d | Sleep: %d hrs\n",
+               temp->day, temp->steps, temp->calories, temp->sleep);
+        temp = temp->next;
+    }
+}
+
+void visualizeSteps() {
+    struct Node* temp = head;
+
+    printf("\n--- Step Count Visualization ---\n");
+    while(temp != NULL) {
+        printf("Day %d: ", temp->day);
+        for(int i = 0; i < temp->steps / 1000; i++) {
+            printf("*");
+        }
+        printf(" (%d)\n", temp->steps);
+        temp = temp->next;
+    }
+}
+
+void visualizeCalories() {
+    struct Node* temp = head;
+
+    printf("\n--- Calories Visualization ---\n");
+    while(temp != NULL) {
+        printf("Day %d: ", temp->day);
+        for(int i = 0; i < temp->calories / 100; i++) {
+            printf("#");
+        }
+        printf(" (%d)\n", temp->calories);
+        temp = temp->next;
+    }
+}
+
+void visualizeSleep() {
+    struct Node* temp = head;
+
+    printf("\n--- Sleep Visualization ---\n");
+    while(temp != NULL) {
+        printf("Day %d: ", temp->day);
+        for(int i = 0; i < temp->sleep; i++) {
+            printf("@");
+        }
+        printf(" (%d hrs)\n", temp->sleep);
+        temp = temp->next;
+    }
+}
+
+int main() {
+    int choice;
+
+    while(1) {
+        printf("\n--- Health Tracker ---\n");
+        printf("1. Add Daily Data\n");
+        printf("2. Display Data\n");
+        printf("3. Visualize Steps\n");
+        printf("4. Visualize Calories\n");
+        printf("5. Visualize Sleep\n");
+        printf("6. Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        switch(choice) {
+            case 1: addData(); break;
+            case 2: displayData(); break;
+            case 3: visualizeSteps(); break;
+            case 4: visualizeCalories(); break;
+            case 5: visualizeSleep(); break;
+            case 6: exit(0);
+            default: printf("Invalid choice\n");
+        }
+    }
+
+    return 0;
+}
